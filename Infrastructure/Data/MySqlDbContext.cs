@@ -35,7 +35,7 @@ namespace MinimalApisDIO.Infrastructure.Data
                     Id = 1,
                     Email = "admin@teste.com",
                     Password = "123456",
-                    Profile = "admin"
+                    Profile = Domain.Enums.Profile.Admin
                 }
             );
         }

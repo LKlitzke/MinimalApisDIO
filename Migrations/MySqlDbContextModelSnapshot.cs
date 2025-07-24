@@ -39,10 +39,8 @@ namespace MinimalApisDIO.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Profile")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                    b.Property<int>("Profile")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -54,7 +52,7 @@ namespace MinimalApisDIO.Migrations
                             Id = 1,
                             Email = "admin@teste.com",
                             Password = "123456",
-                            Profile = "admin"
+                            Profile = 0
                         });
                 });
 

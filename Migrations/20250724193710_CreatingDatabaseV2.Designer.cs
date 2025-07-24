@@ -11,8 +11,8 @@ using MinimalApisDIO.Infrastructure.Data;
 namespace MinimalApisDIO.Migrations
 {
     [DbContext(typeof(MySqlDbContext))]
-    [Migration("20250724153239_AddingAdminTable")]
-    partial class AddingAdminTable
+    [Migration("20250724193710_CreatingDatabaseV2")]
+    partial class CreatingDatabaseV2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,14 +42,47 @@ namespace MinimalApisDIO.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Profile")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                    b.Property<int>("Profile")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@teste.com",
+                            Password = "123456",
+                            Profile = 0
+                        });
+                });
+
+            modelBuilder.Entity("MinimalApisDIO.Domain.Entities.Vehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vehicles");
                 });
 #pragma warning restore 612, 618
         }

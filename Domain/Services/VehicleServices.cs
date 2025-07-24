@@ -1,6 +1,7 @@
 ﻿using MinimalApisDIO.Domain.Entities;
 using MinimalApisDIO.Domain.Interfaces;
 using MinimalApisDIO.Infrastructure.Data;
+using System.Linq;
 
 namespace MinimalApisDIO.Domain.Services
 {
@@ -47,18 +48,21 @@ namespace MinimalApisDIO.Domain.Services
             else return vehicle;
         }
 
-        public List<Vehicle> ListAll(int page = 1, string? name = null, string? brand = null)
+        public List<Vehicle> ListAll(int? page = 1, string? name = null, string? brand = null)
         {
             var query = _dbContext.Vehicles.AsQueryable();
 
             if(!string.IsNullOrEmpty(name))
             {
-                query = query.Where(v => v.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(v => v.Name.ToLower().Contains(name.ToLower()));
             }
 
-            int pageSize = 10;
-            query = query.Skip((page - 1) * pageSize).Take(pageSize);
-
+            if(page != null)
+            {
+                int pageSize = 10;
+                query = query.Skip((page.Value - 1) * pageSize).Take(pageSize);
+            }
+            
             return query.ToList();
         }
     }
