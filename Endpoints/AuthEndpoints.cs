@@ -1,5 +1,6 @@
 ﻿using Carter;
 using MinimalApisDIO.Domain.Dtos;
+using MinimalApisDIO.Domain.Interfaces;
 
 namespace MinimalApisDIO.Endpoints
 {
@@ -7,18 +8,15 @@ namespace MinimalApisDIO.Endpoints
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/login", async (LoginDto loginDto) =>
+            app.MapPost("/login", async (LoginDto loginDto, IAdminServices adminServices) =>
             {
-                if (loginDto.Email == "admin@teste.com" && loginDto.Password == "123456")
+                if (adminServices.Login(loginDto) != null)
                 {
                     return Results.Ok("Login successful!");
                 }
                 else
                     return Results.Unauthorized();
             });
-
         }
-
-        
     }
 }

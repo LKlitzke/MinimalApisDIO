@@ -1,8 +1,12 @@
 using Carter;
 using Microsoft.EntityFrameworkCore;
+using MinimalApisDIO.Domain.Interfaces;
+using MinimalApisDIO.Domain.Services;
 using MinimalApisDIO.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IAdminServices, AdminServices>();
 
 builder.Services.AddDbContext<MySqlDbContext>(options =>
 {
@@ -32,8 +36,3 @@ app.UseHttpsRedirection();
 app.MapCarter();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
