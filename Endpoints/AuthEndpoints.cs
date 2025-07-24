@@ -21,19 +21,19 @@ namespace MinimalApisDIO.Endpoints
                 }
                 else
                     return Results.Unauthorized();
-            });
+            }).AllowAnonymous();
 
             group.MapPost("/create", async (AdminDto adminDto, IAdminServices adminServices) =>
             {
-                if (adminDto.Email != null)
+                if (adminDto.Email == null)
                 {
                     return Results.BadRequest("Email is required.");
                 }
-                if (adminDto.Password != null)
+                if (adminDto.Password == null)
                 {
                     return Results.BadRequest("Password is required.");
                 }
-                if (adminDto.Profile != null)
+                if (adminDto.Profile == null)
                 {
                     return Results.BadRequest("Profile is required.");
                 }

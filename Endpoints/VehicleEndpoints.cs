@@ -4,6 +4,7 @@ using MinimalApisDIO.Domain.Entities;
 using MinimalApisDIO.Domain.Interfaces;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MinimalApisDIO.Endpoints
 {
@@ -67,7 +68,7 @@ namespace MinimalApisDIO.Endpoints
                 }
                 await vehicleServices.Delete(vehicle);
                 return Results.NoContent();
-            }).RequireAuthorization(); 
+            }).RequireAuthorization().RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" }); 
         }
 
         public List<string> ValidateVehicleDto(VehicleDto vehicleDto)
